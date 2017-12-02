@@ -1,0 +1,33 @@
+{
+  "name": "javascript-cukes-starter",
+  "version": "1.0.0",
+  "description": "The minimal setup to work with CucumberJS and Selenium web driver",
+  "main": "index.js",
+  "scripts": {
+    "cukes": "node node_modules/cucumber/bin/cucumber.js ./test/features --tags \"not @todo\" --tags \"not @manual\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjendyk/javascript-cukes-starter.git"
+  },
+  "keywords": [
+    "cucumberjs",
+    "javascript",
+    "selenium",
+    "web",
+    "driver",
+    "setup"
+  ],
+  "author": "bjendyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bjendyk/javascript-cukes-starter/issues"
+  },
+  "homepage": "https://github.com/bjendyk/javascript-cukes-starter#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "cucumber": "^3.1.0",
+    "selenium-webdriver": "^3.6.0"
+  }
+}
