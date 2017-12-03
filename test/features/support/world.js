@@ -22,6 +22,7 @@ var buildFirefoxDriver = function () {
 };
 
 var buildDriver = function () {
+    console.log(process.env.BROWSER);
     switch (process.env.BROWSER) {
         case 'firefox':
         case 'ff':
@@ -32,7 +33,7 @@ var buildDriver = function () {
 };
 
 var World = function ({ parameters }) {
-    var driver = buildDriver(parameters.browser);
+    var driver = buildDriver();
 
     this.host = parameters.host || defaultHost;
     this.port = parameters.port || defaultPort;

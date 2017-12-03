@@ -3,8 +3,8 @@ The minimal setup to work with CucumberJS and Selenium web drivers for Chrome an
 
 ## Prerequisites
 
-1. Download and unpack web driver for Chrome: https://chromedriver.storage.googleapis.com/index.html
-2. Download and unpack web driver for Firefox: https://github.com/mozilla/geckodriver/releases
+1. Download and unpack the web driver for Chrome: https://chromedriver.storage.googleapis.com/index.html
+2. Download and unpack the web driver for Firefox: https://github.com/mozilla/geckodriver/releases
 3. Adjust the `PATH` environment variable to include the directory where the web drivers reside
 4. `npm install`
 
@@ -22,10 +22,6 @@ To run a particular tag:
 
 Just set the environment variable:
 
-`BROWSER=firefox`
-
-And run!
-
-`npm run cukes`
+`BROWSER=firefox npm run cukes`
 
 Happy cukes coding!
