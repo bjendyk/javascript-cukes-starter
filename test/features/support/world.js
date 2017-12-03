@@ -3,9 +3,6 @@
 const { Builder, Capabilities, until } = require('selenium-webdriver');
 const defaults = require('./defaults');
 
-const defaultHost = 'http://localhost';
-const defaultPort = 3210;
-
 class World {
     constructor({ parameters }) {
         this.driver = this.buildDriver();
