@@ -1,50 +1,53 @@
 'use strict';
 
-var { defineSupportCode } = require('cucumber');
-var { Builder, Capabilities, until } = require('selenium-webdriver');
+const { Builder, Capabilities, until } = require('selenium-webdriver');
+const defaults = require('./defaults');
 
-var defaultHost = 'http://localhost';
-var defaultPort = 3210;
-var defaultTimeoutMs = 30000;
+const defaultHost = 'http://localhost';
+const defaultPort = 3210;
 
-var buildChromeDriver = function () {
-    var caps = Capabilities.chrome();
-    var options = {
-        'args': ['--start-maximized', '--no-sandbox', '--no-default-browser-check'],
-        'useAutomationExtension': false // see https://bugs.chromium.org/p/chromedriver/issues/detail?id=1749
-    };
-    caps.set('chromeOptions', caps);
-    return new Builder().forBrowser('chrome').withCapabilities(caps).build();
-};
-
-var buildFirefoxDriver = function () {
-    return new Builder().forBrowser('firefox').build();
-};
-
-var buildDriver = function () {
-    switch (process.env.BROWSER) {
-        case 'firefox':
-        case 'ff':
-            return buildFirefoxDriver();
-        default:
-            return buildChromeDriver();
+class World {
+    constructor({ parameters }) {
+        this.driver = this.buildDriver();
+        this.host = parameters.host || defaults.host;
+        this.port = parameters.port || defaults.port;
     }
-};
 
-var World = function ({ parameters }) {
-    var driver = buildDriver(parameters.browser);
+    getDriver() {
+        return this.driver;
+    }
 
-    this.host = parameters.host || defaultHost;
-    this.port = parameters.port || defaultPort;
-    this.defaultUrl = this.host + ':' + this.port;
-    this.driver = driver;
+    getDefaultUrl() {
+        return this.host + ':' + this.port;
+    }
 
-    this.waitForElement = function (locator) {
-        return driver.wait(until.elementLocated(locator));
-    };
-};
+    waitForElement(locator) {
+        return this.driver.wait(until.elementLocated(locator));
+    }
 
-defineSupportCode(function ({ setWorldConstructor, setDefaultTimeout }) {
-    setWorldConstructor(World);
-    setDefaultTimeout(defaultTimeoutMs);
-});
+    buildChromeDriver() {
+        let caps = Capabilities.chrome();
+        const options = {
+            'args': ['--start-maximized', '--no-sandbox', '--no-default-browser-check'],
+            'useAutomationExtension': false // see https://bugs.chromium.org/p/chromedriver/issues/detail?id=1749
+        };
+        caps.set('chromeOptions', caps);
+        return new Builder().forBrowser('chrome').withCapabilities(caps).build();
+    }
+
+    buildFirefoxDriver() {
+        return new Builder().forBrowser('firefox').build();
+    }
+
+    buildDriver() {
+        switch (process.env.BROWSER) {
+            case 'firefox':
+            case 'ff':
+                return this.buildFirefoxDriver();
+            default:
+                return this.buildChromeDriver();
+        }
+    }
+}
+
+module.exports = World;

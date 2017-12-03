@@ -1,15 +1,19 @@
 'use strict';
 
-var { defineSupportCode } = require('cucumber');
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
+const { defineSupportCode } = require('cucumber');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const World = require('./world');
+const defaults = require('./defaults');
 
-defineSupportCode(function ({ BeforeAll, After }) {
-    BeforeAll(function () {
+defineSupportCode(({ BeforeAll, After, setWorldConstructor, setDefaultTimeout }) => {
+    BeforeAll(() => {
         chai.use(chaiAsPromised);
+        setWorldConstructor(World);
+        setDefaultTimeout(defaults.timeoutMs);
     });
 
     After(function () {
-        return this.driver.quit();
+        return this.getDriver().quit();
     });
 });
